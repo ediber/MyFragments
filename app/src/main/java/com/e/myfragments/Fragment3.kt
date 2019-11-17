@@ -1,11 +1,12 @@
 package com.e.myfragments
 
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_fragment1.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -16,17 +17,17 @@ private const val ARG_PARAM2 = "param2"
 /**
  * A simple [Fragment] subclass.
  * Activities that contain this fragment must implement the
- * [Fragment1.OnFragmentInteractionListener] interface
+ * [Fragment3.OnFragmentInteractionListener] interface
  * to handle interaction events.
- * Use the [Fragment1.newInstance] factory method to
+ * Use the [Fragment3.newInstance] factory method to
  * create an instance of this fragment.
  *
  */
-class Fragment1 : Fragment() {
+class Fragment3 : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private lateinit var listener: OnFragmentListener1
+    private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +42,42 @@ class Fragment1 : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_fragment1, container, false)
+        return inflater.inflate(R.layout.fragment_fragment3, container, false)
+    }
 
-        go_to_2.setOnClickListener{ view ->
-            listener.switchTpFragmen2("aaa")
+    // TODO: Rename method, update argument and hook method into UI event
+    fun onButtonPressed(uri: Uri) {
+        listener?.onFragmentInteraction(uri)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
+    }
 
-        return view
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    /**
+     * This interface must be implemented by activities that contain this
+     * fragment to allow an interaction in this fragment to be communicated
+     * to the activity and potentially other fragments contained in that
+     * activity.
+     *
+     *
+     * See the Android Training lesson [Communicating with Other Fragments]
+     * (http://developer.android.com/training/basics/fragments/communicating.html)
+     * for more information.
+     */
+    interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
+        fun onFragmentInteraction(uri: Uri)
     }
 
     companion object {
@@ -57,25 +87,16 @@ class Fragment1 : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment Fragment1.
+         * @return A new instance of fragment Fragment3.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            Fragment1().apply {
+            Fragment3().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    fun setFragmentListener(listner: OnFragmentListener1){
-        this.listener = listener
-    }
-
-    interface OnFragmentListener1 {
-        // TODO: Update argument type and name
-        fun switchTpFragmen2(str: String)
     }
 }

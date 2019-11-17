@@ -13,10 +13,20 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
+    lateinit var fragment2: Fragment2
+    lateinit var fragment1: Fragment1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        fragment1 = Fragment1.newInstance("a", "b")
+        fragment2 = Fragment2.newInstance("a", "b")
+
+      /*  fragment1.setFragmentListener(object: Fragment1.OnFragmentListener1(){
+
+        })*/
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -60,16 +70,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // Handle navigation view item clicks here.
         when (item.itemId) {
             R.id.nav_fragment1 -> {
-                val newFragment = Fragment1.newInstance("a", "b")
                 val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.frame, newFragment)
+                transaction.replace(R.id.frame, fragment1)
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
             R.id.nav_fragment2 -> {
-                val newFragment = Fragment2.newInstance("a", "b")
                 val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.frame, newFragment)
+                transaction.replace(R.id.frame, fragment2)
                 transaction.addToBackStack(null)
                 transaction.commit()
             }
